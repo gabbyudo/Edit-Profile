@@ -7,20 +7,19 @@
     tools:context=".MainActivity">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/Username_layout"
+        android:id="@+id/username_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:clipToOutline="true"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/Username"
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:errorContentDescription="not correct"
@@ -32,7 +31,7 @@
         android:id="@+id/progressBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Username_layout"
+        app:layout_constraintTop_toBottomOf="@id/username_layout"
         style="?android:attr/progressBarStyle"
         android:indeterminate = "true"
         android:max="5"
@@ -53,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Username_layout" />
+        app:layout_constraintTop_toBottomOf="@id/username_layout" />
 
     <Switch
         android:id="@+id/switch1"
@@ -64,7 +63,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toEndOf="@id/Profile_public"
-        app:layout_constraintTop_toBottomOf="@id/Username_layout" />
+        app:layout_constraintTop_toBottomOf="@id/username_layout" />
 
     <Button
         android:id="@+id/button"
@@ -72,10 +71,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:background="@color/button_background"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="@color/grey"
         app:layout_constraintTop_toBottomOf="@id/Profile_public"
         android:text="Save" />
 

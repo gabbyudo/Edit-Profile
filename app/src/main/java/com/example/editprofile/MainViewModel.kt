@@ -9,9 +9,10 @@ class MainViewModel: ViewModel() {
     val name: LiveData<String>
         get() = _name
 
-    fun getName() {
+    fun getName() : String{
         val name = "dynamics"
         _name.value= name
+        return _name.value.toString()
         }
 
 
