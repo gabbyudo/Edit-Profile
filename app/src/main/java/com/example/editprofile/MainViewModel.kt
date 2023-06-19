@@ -36,11 +36,21 @@ class MainViewModel : ViewModel() {
         } else {
             _errorMessage.value = "invalid Email"
         }
-        _isSaveButtonEnabled.value = true
         if ((email != "dynamics" || isChecked != true ) &&
-            (email != Patterns.EMAIL_ADDRESS.matcher(email).matches().toString())) {
+            (Patterns.EMAIL_ADDRESS.matcher(email).matches()) && email != "") {
             _isSaveButtonEnabled.value =true
-        } else { _isSaveButtonEnabled.value = false}
+        } else  { _isSaveButtonEnabled.value = false}
+
+
+       /* if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            if (email != "dynamics" || isChecked != true) {
+                _isSaveButtonEnabled.value = true
+            } else _isSaveButtonEnabled.value = false
+        } else _isSaveButtonEnabled.value = false*/
     }
 
-}// (did email change or did switch change)  and is email  valid
+
+
+}
+
+// (did email change or did switch change)  and is email  valid
