@@ -1,6 +1,5 @@
 package com.example.editprofile
 
-import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -36,6 +35,8 @@ class MainViewModel : ViewModel() {
         CoroutineScope(Dispatchers.Main).launch {
             delay(5000)
             val password = "password"
+            _passwordMessage.value = password
+
         }
     }
 
@@ -46,11 +47,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun onEmailChangeOrProfileVisibilityChanged(
-        email: String,
-        password: String,
-        isChecked: Boolean
-    ) {
+    fun onEmailChangeOrProfileVisibilityChanged(email: String, password: String, isChecked: Boolean) {
         if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             _errorMessage.value = ""
         } else {
@@ -71,5 +68,9 @@ class MainViewModel : ViewModel() {
             _isSaveButtonEnabled.value = false
         }
 
+        when (isChecked) {
+            false -> _isSaveButtonEnabled.value = true
+            else-> _isSaveButtonEnabled.value = false
+        }
     }
 }
