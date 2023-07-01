@@ -22,7 +22,6 @@
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:errorContentDescription="not correct"
             android:hint="Username" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -40,11 +39,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="16dp"
+        android:clipToOutline="true"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/progressBar"
+        app:layout_constraintBottom_toTopOf="@id/Profile_public">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:password="true"
+            android:hint="password" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <TextView
         android:id="@+id/Profile_public"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="150dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="Make your profile public"
@@ -58,7 +78,7 @@
         android:id="@+id/switch1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="150dp"
         android:checked="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"
@@ -69,7 +89,7 @@
         android:id="@+id/save_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:background="@color/button_background"
         android:layout_marginStart="16dp"

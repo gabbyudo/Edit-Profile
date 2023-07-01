@@ -20,25 +20,36 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         binding.progressBar.visibility = View.VISIBLE
+
         binding.username.doAfterTextChanged {
             viewModel.onEmailChangeOrProfileVisibilityChanged(
-                it.toString(),
-                binding.switch1.isChecked
+                it.toString(), binding.password.text.toString(), binding.switch1.isChecked
+            )
+        }
+        binding.password.doAfterTextChanged {
+            viewModel.onEmailChangeOrProfileVisibilityChanged(
+                binding.username.text.toString(), it.toString(), binding.switch1.isChecked
             )
         }
 
         binding.switch1.setOnCheckedChangeListener { _, isChecked ->
             viewModel.onEmailChangeOrProfileVisibilityChanged(
-                binding.username.text.toString(),
-                isChecked
+                binding.username.text.toString(), binding.password.text.toString(), isChecked
             )
         }
 
         viewModel.user.observe(this) {
+
             binding.username.setText(it.email)
 
             binding.progressBar.visibility = View.GONE
         }
+        viewModel.getUser()
+
+        viewModel.passwordMessage.observe(this, Observer {
+            binding.password.setText(it)
+        })
+        viewModel.getPassword()
 
         viewModel.isSaveButtonEnabled.observe(this, Observer {
             binding.saveButton.isEnabled = it
@@ -48,6 +59,9 @@ class MainActivity : AppCompatActivity() {
             binding.usernameLayout.error = it
         }
 
-        viewModel.getUser()
+        viewModel.errorMessagePassword.observe(this, Observer {
+            binding.passwordLayout.error = it
+
+        })
     }
 }

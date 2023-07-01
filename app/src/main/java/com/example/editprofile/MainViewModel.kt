@@ -1,5 +1,6 @@
 package com.example.editprofile
 
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,9 +12,9 @@ import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
-    private val _user = MutableLiveData<User>()
-    val user: LiveData<User>
-        get() = _user
+    private val viewState = MutableLiveData<ViewState>()
+    val user: LiveData<ViewState>
+        get() = viewState
 
     private val _isSaveButtonEnabled = MutableLiveData<Boolean>()
     val isSaveButtonEnabled: LiveData<Boolean>
@@ -23,34 +24,52 @@ class MainViewModel : ViewModel() {
     val errorMessage: LiveData<String>
         get() = _errorMessage
 
+    private val _errorMessagePassword = MutableLiveData<String>()
+    val errorMessagePassword: LiveData<String>
+        get() = _errorMessagePassword
+
+    private val _passwordMessage = MutableLiveData<String>()
+    val passwordMessage: LiveData<String>
+        get() = _passwordMessage
+
+    fun getPassword() {
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(5000)
+            val password = "password"
+        }
+    }
+
     fun getUser() {
         CoroutineScope(Dispatchers.Main).launch {
             delay(5000)
-            _user.value = User("dynamics", true)
+            viewState.value = ViewState("dynamics", true)
         }
     }
 
-    fun onEmailChangeOrProfileVisibilityChanged(email: String, isChecked: Boolean) {
+    fun onEmailChangeOrProfileVisibilityChanged(
+        email: String,
+        password: String,
+        isChecked: Boolean
+    ) {
         if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             _errorMessage.value = ""
         } else {
-            _errorMessage.value = "invalid Email"
+            _errorMessage.value = "Invalid email"
         }
-        if ((email != "dynamics" || isChecked != true ) &&
-            (Patterns.EMAIL_ADDRESS.matcher(email).matches()) && email != "") {
-            _isSaveButtonEnabled.value =true
-        } else  { _isSaveButtonEnabled.value = false}
+        if (Patterns.EMAIL_ADDRESS.matcher(password).matches()) {
+            _errorMessagePassword.value = ""
+        } else {
+            _errorMessagePassword.value = "invalid password"
+        }
 
+        if ((email != "dynamics" || isChecked != true || password != "password") &&
+            (Patterns.EMAIL_ADDRESS.matcher(email).matches()) &&
+            Patterns.EMAIL_ADDRESS.matcher(password).matches()
+        ) {
+            _isSaveButtonEnabled.value = true
+        } else {
+            _isSaveButtonEnabled.value = false
+        }
 
-       /* if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            if (email != "dynamics" || isChecked != true) {
-                _isSaveButtonEnabled.value = true
-            } else _isSaveButtonEnabled.value = false
-        } else _isSaveButtonEnabled.value = false*/
     }
-
-
-
 }
-
-// (did email change or did switch change)  and is email  valid
