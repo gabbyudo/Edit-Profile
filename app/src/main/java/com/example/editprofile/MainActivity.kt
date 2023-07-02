@@ -2,6 +2,7 @@ package com.example.editprofile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
@@ -39,18 +40,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.user.observe(this) {
+            Log.e("ghd", "34ew")
 
             binding.username.setText(it.email)
+            binding.password.setText(it.password)
+           // binding.saveButton.isEnabled = it.isSaveButtonEnabled
 
             binding.progressBar.visibility = View.GONE
         }
         viewModel.getUser()
 
-        viewModel.passwordMessage.observe(this, Observer {
+        /*viewModel.passwordMessage.observe(this, Observer {
             binding.password.setText(it)
         })
-        viewModel.getPassword()
-
+        //viewModel.getPassword()
+*/
         viewModel.isSaveButtonEnabled.observe(this, Observer {
             binding.saveButton.isEnabled = it
         })

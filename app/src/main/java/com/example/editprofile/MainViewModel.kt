@@ -31,19 +31,20 @@ class MainViewModel : ViewModel() {
     val passwordMessage: LiveData<String>
         get() = _passwordMessage
 
-    fun getPassword() {
+    /*fun getPassword() {
         CoroutineScope(Dispatchers.Main).launch {
             delay(5000)
             val password = "password"
             _passwordMessage.value = password
 
         }
-    }
+    }*/
 
     fun getUser() {
         CoroutineScope(Dispatchers.Main).launch {
             delay(5000)
-            viewState.value = ViewState("dynamics", true)
+            viewState.value = ViewState("dynamics", true, "repeat",
+            )
         }
     }
 
@@ -68,9 +69,9 @@ class MainViewModel : ViewModel() {
             _isSaveButtonEnabled.value = false
         }
 
-        when (isChecked) {
+        /*when (isChecked) {
             false -> _isSaveButtonEnabled.value = true
             else-> _isSaveButtonEnabled.value = false
-        }
+        }*/
     }
 }
