@@ -39,33 +39,23 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        viewModel.user.observe(this) {
-            Log.e("ghd", "34ew")
-
-            binding.username.setText(it.email)
-            binding.password.setText(it.password)
-           // binding.saveButton.isEnabled = it.isSaveButtonEnabled
-
-            binding.progressBar.visibility = View.GONE
+        viewModel.viewState.observe(this) {
+            if (it.isInitialState) {
+                binding.username.setText(it.email)
+                binding.password.setText(it.password)
+                binding.progressBar.visibility = View.GONE
+            }
+            binding.usernameLayout.error = it.errorMessage
         }
+
         viewModel.getUser()
 
-        /*viewModel.passwordMessage.observe(this, Observer {
-            binding.password.setText(it)
-        })
-        //viewModel.getPassword()
-*/
         viewModel.isSaveButtonEnabled.observe(this, Observer {
             binding.saveButton.isEnabled = it
         })
 
-        viewModel.errorMessage.observe(this) {
-            binding.usernameLayout.error = it
-        }
-
         viewModel.errorMessagePassword.observe(this, Observer {
             binding.passwordLayout.error = it
-
         })
     }
 }

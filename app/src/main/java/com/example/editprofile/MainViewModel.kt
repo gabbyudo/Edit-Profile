@@ -11,53 +11,41 @@ import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
-    private val viewState = MutableLiveData<ViewState>()
-    val user: LiveData<ViewState>
-        get() = viewState
+    private val _viewState = MutableLiveData<ViewState>()
+    val viewState: LiveData<ViewState>
+        get() = _viewState
 
     private val _isSaveButtonEnabled = MutableLiveData<Boolean>()
     val isSaveButtonEnabled: LiveData<Boolean>
         get() = _isSaveButtonEnabled
 
-    private val _errorMessage = MutableLiveData<String>()
-    val errorMessage: LiveData<String>
-        get() = _errorMessage
-
     private val _errorMessagePassword = MutableLiveData<String>()
     val errorMessagePassword: LiveData<String>
         get() = _errorMessagePassword
 
-    private val _passwordMessage = MutableLiveData<String>()
-    val passwordMessage: LiveData<String>
-        get() = _passwordMessage
-
-    /*fun getPassword() {
-        CoroutineScope(Dispatchers.Main).launch {
-            delay(5000)
-            val password = "password"
-            _passwordMessage.value = password
-
-        }
-    }*/
-
     fun getUser() {
         CoroutineScope(Dispatchers.Main).launch {
             delay(5000)
-            viewState.value = ViewState("dynamics", true, "repeat",
+            _viewState.value = ViewState(
+                "dynamics",
+                true,
+                "repeat",
+           "Invalid email",
+           true
             )
         }
     }
 
     fun onEmailChangeOrProfileVisibilityChanged(email: String, password: String, isChecked: Boolean) {
         if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _errorMessage.value = ""
+            _viewState.value = _viewState.value?.copy(errorMessage= "", isInitialState = false)
         } else {
-            _errorMessage.value = "Invalid email"
+            _viewState.value = _viewState.value?.copy(errorMessage="Invalid email", isInitialState = false)
         }
         if (Patterns.EMAIL_ADDRESS.matcher(password).matches()) {
             _errorMessagePassword.value = ""
         } else {
-            _errorMessagePassword.value = "invalid password"
+            _errorMessagePassword.value = "Invalid password"
         }
 
         if ((email != "dynamics" || isChecked != true || password != "password") &&
