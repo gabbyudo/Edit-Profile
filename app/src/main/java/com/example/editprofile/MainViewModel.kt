@@ -19,9 +19,6 @@ class MainViewModel : ViewModel() {
     val isSaveButtonEnabled: LiveData<Boolean>
         get() = _isSaveButtonEnabled
 
-    private val _errorMessagePassword = MutableLiveData<String>()
-    val errorMessagePassword: LiveData<String>
-        get() = _errorMessagePassword
 
     fun getUser() {
         CoroutineScope(Dispatchers.Main).launch {
@@ -31,7 +28,8 @@ class MainViewModel : ViewModel() {
                 true,
                 "repeat",
            "Invalid email",
-           true
+           true,
+            "Invalid password",
             )
         }
     }
@@ -43,9 +41,9 @@ class MainViewModel : ViewModel() {
             _viewState.value = _viewState.value?.copy(errorMessage="Invalid email", isInitialState = false)
         }
         if (Patterns.EMAIL_ADDRESS.matcher(password).matches()) {
-            _errorMessagePassword.value = ""
+            _viewState.value = _viewState.value?.copy(errorMessagePassword= "")
         } else {
-            _errorMessagePassword.value = "Invalid password"
+            _viewState.value = _viewState.value?.copy(errorMessagePassword = "Invalid password")
         }
 
         if ((email != "dynamics" || isChecked != true || password != "password") &&
