@@ -46,14 +46,12 @@ class MainActivity : AppCompatActivity() {
                 binding.progressBar.visibility = View.GONE
             }
             binding.usernameLayout.error = it.errorMessage
-            binding.passwordLayout.error =it.errorMessage
+            binding.passwordLayout.error =it.errorMessagePassword
+            binding.saveButton.isEnabled = it.isSaveButtonEnabled
         }
 
         viewModel.getUser()
 
-        viewModel.isSaveButtonEnabled.observe(this, Observer {
-            binding.saveButton.isEnabled = it
-        })
 
     }
 }

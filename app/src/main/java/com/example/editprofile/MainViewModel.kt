@@ -30,6 +30,8 @@ class MainViewModel : ViewModel() {
            "Invalid email",
            true,
             "Invalid password",
+                true,
+                //true
             )
         }
     }
@@ -50,14 +52,14 @@ class MainViewModel : ViewModel() {
             (Patterns.EMAIL_ADDRESS.matcher(email).matches()) &&
             Patterns.EMAIL_ADDRESS.matcher(password).matches()
         ) {
-            _isSaveButtonEnabled.value = true
+            _viewState.value = _viewState.value?.copy(isSaveButtonEnabled = true)
         } else {
-            _isSaveButtonEnabled.value = false
+            _viewState.value = _viewState.value?.copy(isSaveButtonEnabled = false)
         }
 
-        /*when (isChecked) {
-            false -> _isSaveButtonEnabled.value = true
-            else-> _isSaveButtonEnabled.value = false
-        }*/
+        when (isChecked) {
+            false ->  _viewState.value = _viewState.value?.copy(isSaveButtonEnabled = true)
+            else->  _viewState.value = _viewState.value?.copy(isSaveButtonEnabled = false)
+        }
     }
 }
