@@ -57,9 +57,9 @@ class MainViewModel : ViewModel() {
             _viewState.value = _viewState.value?.copy(isSaveButtonEnabled = false)
         }
 
-        when (isChecked) {
+       /* when (isChecked) {
             false ->  _viewState.value = _viewState.value?.copy(isSaveButtonEnabled = true)
             else->  _viewState.value = _viewState.value?.copy(isSaveButtonEnabled = false)
-        }
+        }*/
     }
 }

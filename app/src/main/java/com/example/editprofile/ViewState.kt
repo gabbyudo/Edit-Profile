@@ -7,6 +7,5 @@ data class ViewState(
     val errorMessage: String,
     val isInitialState: Boolean,
     val errorMessagePassword: String,
-    //val isEnabledState: Boolean,
     val isSaveButtonEnabled: Boolean,
-                     )
+)
