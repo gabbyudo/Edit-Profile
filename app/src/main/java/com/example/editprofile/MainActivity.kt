@@ -2,12 +2,10 @@ package com.example.editprofile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.util.Patterns
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.editprofile.database.UserInfo
 import com.example.editprofile.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +17,8 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        val factory = MainViewModelFactory(application)
+        viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
         binding.progressBar.visibility = View.VISIBLE
 
         binding.username.doAfterTextChanged {
@@ -38,20 +37,22 @@ class MainActivity : AppCompatActivity() {
                 binding.username.text.toString(), binding.password.text.toString(), isChecked
             )
         }
-
+        binding.saveButton.setOnClickListener{
+            val addUsername = UserInfo(binding.username.text.toString(),
+                binding.password.text.toString())
+           viewModel.addUser(addUsername)
+        }
         viewModel.viewState.observe(this) {
             if (it.isInitialState) {
-                binding.username.setText(it.email)
-                binding.password.setText(it.password)
-                binding.progressBar.visibility = View.GONE
+                    binding.username.setText(it.email)
+                    binding.password.setText(it.password)
+                    binding.progressBar.visibility = View.GONE
+                }
+                binding.usernameLayout.error = it.errorMessage
+                binding.passwordLayout.error =it.errorMessagePassword
+                binding.saveButton.isEnabled = it.isSaveButtonEnabled
             }
-            binding.usernameLayout.error = it.errorMessage
-            binding.passwordLayout.error =it.errorMessagePassword
-            binding.saveButton.isEnabled = it.isSaveButtonEnabled
-        }
 
         viewModel.getUser()
-
-
     }
 }
