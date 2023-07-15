@@ -25,32 +25,39 @@ class MainViewModel(application: Application) : ViewModel() {
     val viewState: LiveData<ViewState>
         get() = _viewState
 
-    private val _isSaveButtonEnabled = MutableLiveData<Boolean>()
-    val isSaveButtonEnabled: LiveData<Boolean>
-        get() = _isSaveButtonEnabled
-
     fun addUser(info: UserInfo){
         CoroutineScope(Dispatchers.Main).launch {
             repository.insertInfo(info)
         }
     }
 
-
-
     fun getUser() {
-
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.IO).launch {
             delay(5000)
             val user = repository.getUser()
-            _viewState.value = ViewState(
-                user.username,
-                true,
-                user.password,
-           "Invalid email",
-           true,
-            "Invalid password",
-                true,
-            )
+            if (user == null) {
+                _viewState.postValue(ViewState(
+                    "",
+                    true,
+                    "",
+                    "Invalid email",
+                    true,
+                    "Invalid password",
+                    true,
+                )
+                )
+            }else if (user != null) {
+                _viewState.postValue(ViewState(
+                    user?.username,
+                    true,
+                    user?.password,
+                    "Invalid email",
+                    true,
+                    "Invalid password",
+                    true,
+                )
+                )
+            }
         }
     }
 

@@ -13,6 +13,6 @@ interface UserDao {
     suspend fun insertUserInfo(info: UserInfo)
 
     @Query("SELECT * FROM UserTable ")
-    fun getUserInfo(): UserInfo
+    fun getUserInfo(): UserInfo?
 
 }
